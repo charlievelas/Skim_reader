@@ -155,7 +155,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "float " + var_name_vect.at(var_indx) + "_Py;" << endl;
     outFile << "float " + var_name_vect.at(var_indx) + "_Pz;" << endl;
     outFile << "float " + var_name_vect.at(var_indx) + "_PID;" << endl;
-    outFile << "float " + var_name_vect.at(var_indx) + "_Beta;" << endl;
+    outFile << "float " + var_name_vect.at(var_indx) + "_beta;" << endl;
     outFile << "float " + var_name_vect.at(var_indx) + "_chi2PID;" << endl;
     outFile << "float " + var_name_vect.at(var_indx) + "_E;" << endl;
     outFile << "float " + var_name_vect.at(var_indx) + "_Th;" << endl;
@@ -174,7 +174,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_Py\",&" + var_name_vect.at(var_indx) + "_Py);" << endl;
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_Pz\",&" + var_name_vect.at(var_indx) + "_Pz);" << endl;
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_PID\",&" + var_name_vect.at(var_indx) + "_PID);" << endl;
-    outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_Beta\",&" + var_name_vect.at(var_indx) + "_Beta);" << endl;
+    outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_beta\",&" + var_name_vect.at(var_indx) + "_beta);" << endl;
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_chi2PID\",&" + var_name_vect.at(var_indx) + "_chi2PID);" << endl;
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_E\",&" + var_name_vect.at(var_indx) + "_E);" << endl;
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_Th\",&" + var_name_vect.at(var_indx) + "_Th);" << endl;        
@@ -296,8 +296,8 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "              " + var_name_vect.at(var_indx) + "_Py=particle[k]->par()->getPy();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_Pz=particle[k]->par()->getPz();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_PID=particle[k]->par()->getPID();" << endl;
-    outFile << "              " + var_name_vect.at(var_indx) + "_Beta=particle[k]->par()->getBeta();" << endl;
-    outFile << "              " + var_name_vect.at(var_indx) + "_Chi2Pid=particle[k]->par()->getChi2Pid();" << endl;
+    outFile << "              " + var_name_vect.at(var_indx) + "_beta=particle[k]->par()->getBeta();" << endl;
+    outFile << "              " + var_name_vect.at(var_indx) + "_chi2PID=particle[k]->par()->getChi2Pid();" << endl;
     outFile << "              float " + var_name_vect.at(var_indx) + "_M=" + "PDG_info->GetParticle(particle[k]->par()->getPid())->Mass();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_LV.SetXYZM(" + var_name_vect.at(var_indx) + "_Px," + var_name_vect.at(var_indx) + "_Py," + var_name_vect.at(var_indx) + "_Pz," + var_name_vect.at(var_indx) + "_M);" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_E=" + var_name_vect.at(var_indx) + "_LV.E();" << endl;
