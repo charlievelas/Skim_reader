@@ -386,7 +386,9 @@ outFile << "    }" << endl;
 outFile << "}" << endl;
 outFile << "tree->Write();" << endl;
 outFile << endl;
+outFile << "cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;" << endl;
 outFile << "cout << \"Skimmed tree saved to 'skim_tree.root'\" << endl;" << endl;
+outFile << "cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;" << endl;
 outFile << endl;
 outFile << "}" << endl;
 
