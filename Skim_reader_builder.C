@@ -51,10 +51,10 @@ cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 std::cout << "Beam is 10.2 GeV electron and target is stationary proton," << endl;
 std::cout << "this can be changed before running" << endl;
 outFile << "auto PDG_info=TDatabasePDG::Instance();" << endl;
-outFile << "TLorentzVector Beam;" << endl;
-outFile << "Beam.SetXYZM(0,0,10.2,0.000511);" << endl;
-outFile << "TLorentzVector Target;" << endl;
-outFile << "Target.SetXYZM(0,0,0,0.93827);" << endl;
+outFile << "TLorentzVector Beam_LV;" << endl;
+outFile << "Beam_LV.SetXYZM(0,0,10.2,0.000511);" << endl;
+outFile << "TLorentzVector Target_LV;" << endl;
+outFile << "Target_LV.SetXYZM(0,0,0,0.93827);" << endl;
 outFile << endl;
 
 //// USER PID INPUT ////
