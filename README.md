@@ -4,11 +4,11 @@ A programme allowing for easy HIPO file skimming using clas12root
 Requires ROOT, tested on version 6.30/06.
 
 ## How to install
-For bash
-```bash
+On cshrc
+```sh
 git clone https://github.com/charlievelas/Skim_reader.git
 cd Skim_reader
-export SkimR=$PWD
+setenv SkimR $PWD
 ```
 
 ## How to run
