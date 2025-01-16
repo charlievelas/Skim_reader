@@ -13,4 +13,4 @@ chmod u+x skim_reader_activator.sh
 ```
 
 ## How to run
-        root '$TreeUI/loadGUI("/the/location/of/file.root")'
+        $SkimR/skim_reader_activator.sh
