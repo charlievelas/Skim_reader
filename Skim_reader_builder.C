@@ -39,7 +39,7 @@ std::string HIPOinput;
 std::cout << "Enter location of HIPO files(s) to be analysed:" << endl;
 std::getline(std::cin, HIPOinput);  // Get the user inpu
 
-outFile << "TString in_file_name = " + HIPOinput + ";" << endl;
+outFile << "TString in_file_name = \"" + HIPOinput + "\";" << endl;
 outFile << "TChain chain(\"hipo\");" << endl;
 outFile << "chain.Add(in_file_name.Data());" << endl;
 outFile << "auto files=chain.GetListOfFiles();" << endl;
@@ -161,7 +161,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "float " + var_name_vect.at(var_indx) + "_Th;" << endl;
     outFile << "float MissMass_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "float MissMass2_" + var_name_vect.at(var_indx) + ";" << endl;
-    outFile << "TLorentzVector " + var_name_vect.at(var_indx) + "_LV // No associated branch;" << endl; // No associated branch
+    outFile << "TLorentzVector " + var_name_vect.at(var_indx) + "_LV; // No associated branch" << endl; // No associated branch
 }
 outFile << "float MissMass;" << endl;
 outFile << "float MissMass2;" << endl;
@@ -193,7 +193,7 @@ outFile << "for(Int_t i=0;i<files->GetEntries();i++){" << endl;
 outFile << endl;
 
 // Assign a hipo file to the clas12 reader object
-outFile << "    clas12reader c12(files->At(i)->GetTitle())" << endl;
+outFile << "    clas12reader c12(files->At(i)->GetTitle());" << endl;
 outFile << endl;
 
 // PID conditions
@@ -295,7 +295,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "              " + var_name_vect.at(var_indx) + "_Px=particle[k]->par()->getPx();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_Py=particle[k]->par()->getPy();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_Pz=particle[k]->par()->getPz();" << endl;
-    outFile << "              float " + var_name_vect.at(var_indx) + "_M=" + "PDG_info->GetParticle(particle[k]->par()->getPid())->Mass());" << endl;
+    outFile << "              float " + var_name_vect.at(var_indx) + "_M=" + "PDG_info->GetParticle(particle[k]->par()->getPid())->Mass();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_LV.SetXYZM(" + var_name_vect.at(var_indx) + "_Px," + var_name_vect.at(var_indx) + "_Py," + var_name_vect.at(var_indx) + "_Pz," + var_name_vect.at(var_indx) + "_M);" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_E=" + var_name_vect.at(var_indx) + "_LV.E();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_Th=" + var_name_vect.at(var_indx) + "_LV.Theta();" << endl;
