@@ -28,7 +28,7 @@ outFile << "using namespace clas12;" << endl;
 outFile << endl;
 
 // Start of macro
-outFile << "void skim_reader(){" << endl;
+outFile << "void Skim_reader(){" << endl;
 outFile << endl;
 
 //Input file, output file, HIPO location and Ttree
