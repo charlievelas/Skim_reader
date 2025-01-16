@@ -6,7 +6,7 @@ Requires ROOT, tested on version 6.30/06.
 ## How to install
 For bash
 ```bash
-git clone https://github.com/charlievelas/TreeUI.git
+git clone https://github.com/charlievelas/Skim_reader.git
 cd Skim_reader
 export SkimR=$PWD
 ```
