@@ -11,7 +11,7 @@ while true; do
     read input
     if [ "$input" == "yes" ]; then
         echo "Running 'Skim_reader.C'"
-	root -q -l $SkimR/Skim_reader.C
+	root -q -l Skim_reader.C
 	break
     elif [ "$input" == "no" ]; then
         echo "Not running 'Skim_reader.C'"
