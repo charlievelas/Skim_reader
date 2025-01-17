@@ -55,6 +55,7 @@ outFile << "TLorentzVector Beam_LV;" << endl;
 outFile << "Beam_LV.SetXYZM(0,0,10.2,0.000511);" << endl;
 outFile << "TLorentzVector Target_LV;" << endl;
 outFile << "Target_LV.SetXYZM(0,0,0,0.93827);" << endl;
+outFile << "TLorentzVector elScat_LV;" << endl;
 outFile << endl;
 
 //// USER PID INPUT ////
@@ -168,6 +169,8 @@ outFile << "float MissMass;" << endl;
 outFile << "float MissMass2;" << endl;
 outFile << "float MissTh;" << endl;
 outFile << "float MissE;" << endl;
+outFile << "float Q2;" << endl;
+outFile << "float Egamma;" << endl;
 
 outFile << endl;
 for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){    
@@ -186,7 +189,9 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
 outFile << "tree->Branch(\"MissMass\",&MissMass);" << endl;        
 outFile << "tree->Branch(\"MissMass2\",&MissMass2);" << endl;
 outFile << "tree->Branch(\"MissTh\",&MissTh);" << endl;        
-outFile << "tree->Branch(\"MissE\",&MissE);" << endl;        
+outFile << "tree->Branch(\"MissE\",&MissE);" << endl;
+outFile << "tree->Branch(\"Q2\",&Q2);" << endl;
+outFile << "tree->Branch(\"Egamma\",&Egamma);" << endl;
 outFile << endl;
 
 
@@ -287,12 +292,21 @@ outFile << endl;
 outFile << "    Int_t eventnumber=0;" << endl;
 outFile << "    while(c12.next()==true){" << endl;
 outFile << "        eventnumber++;" << endl;
+outFile << "        int evn_el_count=0;" << endl;
 outFile << "        Int_t k = 0;" << endl;
 outFile << "        auto particle = c12.getDetParticles();" << endl;
 outFile << "        Int_t numofpart = particle.size();" << endl;
 outFile << "        for(Int_t k=0;k<numofpart;k++){" << endl;
 
+int evn_el_count=0;
 for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
+    if (PID_vect.at(var_indx)==11 && evn_el_count==0){
+        outFile << "            if (PID_vect.at(var_indx)==11 && evn_el_count==0){" << endl;
+        outFile << "              elScat_LV.SetXYZM(particle[k]->par()->getPx(),particle[k]->par()->getPy(),particle[k]->par()->getPz(),0.000511);" << endl;
+        outFile << "              evn_el_coun++;" << endl;
+        outfile << "            }" << endl;
+        evn_el_coun++;
+    }
     outFile << "            if (particle[k]->par()->getPid()==" + PID_vect.at(var_indx) + "){" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_Px=particle[k]->par()->getPx();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_Py=particle[k]->par()->getPy();" << endl;
@@ -334,6 +348,13 @@ outFile << "        MissMass2 = missAll_LV.M2();" << endl;
 outFile << "        // (somewhat) miscellaneous" << endl;
 outFile << "        MissTh = missAll_LV.Theta();" << endl;
 outFile << "        MissE = missAll_LV.E();" << endl;
+if (evn_el_count==1){
+    outFile << "        TLorentzVector gamma;" << endl;
+    outFile << "        gamma = Beam_LV - elScat_LV;" << endl;
+    outFile << "        Q2 = -gamma.M2();" << endl;
+    outFile << "        Egamma = gamma.E();" << endl;
+}
+outFile << "        int evn_el_count=0;" << endl;
 outFile << endl;
 
 cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
