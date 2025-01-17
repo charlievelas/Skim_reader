@@ -1,7 +1,7 @@
 # Skim_reader
 A programme allowing for easy HIPO file skimming using clas12root
 
-Requires ROOT, tested on version 6.30/06.
+Requires ROOT, tested on version 6.30/06, and clas12root.
 
 ## How to install
 On cshrc
