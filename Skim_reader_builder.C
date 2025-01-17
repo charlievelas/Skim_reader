@@ -301,7 +301,7 @@ outFile << "        for(Int_t k=0;k<numofpart;k++){" << endl;
 int evn_el_count=0;
 for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     if (PID_vect.at(var_indx)==11 && evn_el_count==0){
-        outFile << "            if (PID_vect.at(var_indx)==11 && evn_el_count==0){" << endl;
+        outFile << "            if (particle[k]->par()->getPid()==11 && evn_el_count==0){" << endl;
         outFile << "              elScat_LV.SetXYZM(particle[k]->par()->getPx(),particle[k]->par()->getPy(),particle[k]->par()->getPz(),0.000511);" << endl;
         outFile << "              evn_el_coun++;" << endl;
         outFile << "            }" << endl;
