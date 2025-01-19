@@ -304,7 +304,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
         outFile << "            // Beam-electron(scattered) kinematics" << endl;
         outFile << "            if (particle[k]->par()->getPid()==11 && evn_el_count==0){" << endl;
         outFile << "              elScat_LV.SetXYZM(particle[k]->par()->getPx(),particle[k]->par()->getPy(),particle[k]->par()->getPz(),0.000511);" << endl;
-        outFile << "              evn_el_coun++;" << endl;
+        outFile << "              evn_el_count++;" << endl;
         outFile << "            }" << endl;
         evn_el_count++;
     }
@@ -356,7 +356,7 @@ if (evn_el_count==1){
     outFile << "        Q2 = -gamma.M2();" << endl;
     outFile << "        Egamma = gamma.E();" << endl;
 }
-outFile << "        int evn_el_count=0;" << endl;
+outFile << "        evn_el_count=0;" << endl;
 outFile << endl;
 
 cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
