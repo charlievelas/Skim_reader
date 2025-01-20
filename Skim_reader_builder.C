@@ -335,7 +335,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     missEAll = missEAll + " - " + var_name_vect.at(var_indx) + "_LV.E()";
     // Confusion ahead: variables of the same name used here and also uploaded to outFile
     outFile << "        TLorentzVector miss_LV_" + var_name_vect.at(var_indx) + ";" << endl;
-    outFile << "        TLorentzVector missE_" + var_name_vect.at(var_indx) + ";" << endl;
+    outFile << "        float missE_" + var_name_vect.at(var_indx) + ";" << endl;
     std::string miss_LV = "Beam_LV + Target_LV";
     std::string missE = "Beam_LV.E() + Target_LV.E()";
     for (int var_indx2=0; var_indx2<var_name_vect.size(); var_indx2++){
