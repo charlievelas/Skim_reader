@@ -329,20 +329,25 @@ outFile << "        }" << endl;
 outFile << endl;
 
 std::string missAll_LV = "Beam_LV + Target_LV";
+std::string missEAll = "Beam_LV.E() + Target_LV.E()";
 for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     missAll_LV = missAll_LV + " - " + var_name_vect.at(var_indx) + "_LV";
+    missEAll = missEAll + " - " + var_name_vect.at(var_indx) + "_LV.E()";
     // Confusion ahead: variables of the same name used here and also uploaded to outFile
     outFile << "        TLorentzVector miss_LV_" + var_name_vect.at(var_indx) + ";" << endl;
+    outFile << "        TLorentzVector missE_" + var_name_vect.at(var_indx) + ";" << endl;
     std::string miss_LV = "Beam_LV + Target_LV";
+    std::string missE_ = "Beam_LV.E() + Target_LV.E()";
     for (int var_indx2=0; var_indx2<var_name_vect.size(); var_indx2++){
         if (var_indx!=var_indx2){
-            miss_LV = miss_LV + " - " + var_name_vect.at(var_indx2) + "_LV";   
+            miss_LV = miss_LV + " - " + var_name_vect.at(var_indx2) + "_LV"; 
+            missE_ = missE_ + " - " + var_name_vect.at(var_indx2) + "_LV.E()";
         }
     }
     outFile << "        miss_LV_" + var_name_vect.at(var_indx) + " = " + miss_LV + ";" << endl;
     outFile << "        MissMass_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        MissMass2_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M2();" << endl;
-    outFile << "        MissEnergy_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".E();" << endl;
+    outFile << "        MissEnergy_" + var_name_vect.at(var_indx) + " = missE_" + var_name_vect.at(var_indx) + ";" << endl;
 }
 
 outFile << "        TLorentzVector missAll_LV;" << endl;
@@ -351,7 +356,7 @@ outFile << "        MissMass = missAll_LV.M();" << endl;
 outFile << "        MissMass2 = missAll_LV.M2();" << endl;
 outFile << "        // (somewhat) miscellaneous" << endl;
 outFile << "        MissTh = missAll_LV.Theta();" << endl;
-outFile << "        MissE = missAll_LV.E();" << endl;
+outFile << "        MissE = missEAll;" << endl;
 if (evn_el_count==1){
     outFile << "        // Beam-electron(scattered) kinematics" << endl;
     outFile << "        TLorentzVector gamma;" << endl;
