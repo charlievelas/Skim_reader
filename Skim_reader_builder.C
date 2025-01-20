@@ -357,7 +357,7 @@ outFile << "        MissMass = missAll_LV.M();" << endl;
 outFile << "        MissMass2 = missAll_LV.M2();" << endl;
 outFile << "        // (somewhat) miscellaneous" << endl;
 outFile << "        MissTh = missAll_LV.Theta();" << endl;
-outFile << "        MissE = missEAll;" << endl;
+outFile << "        MissE = " + missEAll + ";" << endl;
 if (evn_el_count==1){
     outFile << "        // Beam-electron(scattered) kinematics" << endl;
     outFile << "        TLorentzVector gamma;" << endl;
