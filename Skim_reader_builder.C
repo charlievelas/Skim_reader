@@ -337,17 +337,17 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "        TLorentzVector miss_LV_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "        TLorentzVector missE_" + var_name_vect.at(var_indx) + ";" << endl;
     std::string miss_LV = "Beam_LV + Target_LV";
-    std::string missE_ = "Beam_LV.E() + Target_LV.E()";
+    std::string missE = "Beam_LV.E() + Target_LV.E()";
     for (int var_indx2=0; var_indx2<var_name_vect.size(); var_indx2++){
         if (var_indx!=var_indx2){
             miss_LV = miss_LV + " - " + var_name_vect.at(var_indx2) + "_LV"; 
-            missE_ = missE_ + " - " + var_name_vect.at(var_indx2) + "_LV.E()";
+            missE = missE + " - " + var_name_vect.at(var_indx2) + "_LV.E()";
         }
     }
     outFile << "        miss_LV_" + var_name_vect.at(var_indx) + " = " + miss_LV + ";" << endl;
     outFile << "        MissMass_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        MissMass2_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M2();" << endl;
-    outFile << "        missE_" + var_name_vect.at(var_indx) + " = " + miss_E + ";" << endl;
+    outFile << "        missE_" + var_name_vect.at(var_indx) + " = " + missE + ";" << endl;
     outFile << "        MissEnergy_" + var_name_vect.at(var_indx) + " = missE_" + var_name_vect.at(var_indx) + ";" << endl;
 }
 
