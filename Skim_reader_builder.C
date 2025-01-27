@@ -98,7 +98,7 @@ while (true) {
     bool has_invalid_characters = false;
     for (char ch : input) {
         // If any character is not alphanumeric, a comma, a colon ort an underscore then it's invalid
-        if (!std::isalnum(ch) && ch != ',' && ch != ':' && ch != '_') {
+        if (!std::isalnum(ch) && ch != ',' && ch != ':' && ch != '_' && ch != '-') {
             has_invalid_characters = true;
             break;  // No need to check further if one invalid character is found
         }
