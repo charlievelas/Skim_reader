@@ -329,24 +329,31 @@ outFile << "        }" << endl;
 outFile << endl;
 
 std::string missAll_LV = "Beam_LV + Target_LV";
+std::string invAll_LV = "";
 std::string missEAll = "Beam_LV.E() + Target_LV.E()";
 for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     missAll_LV = missAll_LV + " - " + var_name_vect.at(var_indx) + "_LV";
+    invAll_LV = invAll_LV + var_name_vect.at(var_indx) + "_LV + ";
     missEAll = missEAll + " - " + var_name_vect.at(var_indx) + "_LV.E()";
     // Confusion ahead: variables of the same name used here and also uploaded to outFile
     outFile << "        TLorentzVector miss_LV_" + var_name_vect.at(var_indx) + ";" << endl;
+    outFile << "        TLorentzVector inv_LV_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "        float missE_" + var_name_vect.at(var_indx) + ";" << endl;
     std::string miss_LV = "Beam_LV + Target_LV";
+    std::string inv_LV = "";
     std::string missE = "Beam_LV.E() + Target_LV.E()";
     for (int var_indx2=0; var_indx2<var_name_vect.size(); var_indx2++){
         if (var_indx!=var_indx2){
             miss_LV = miss_LV + " - " + var_name_vect.at(var_indx2) + "_LV"; 
+            inv_LV = inv_LV + var_name_vect.at(var_indx2) + "_LV + ";
             missE = missE + " - " + var_name_vect.at(var_indx2) + "_LV.E()";
         }
-    }
+    }    PIDs_chosen.erase(PIDs_chosen.length() - 5);
     outFile << "        miss_LV_" + var_name_vect.at(var_indx) + " = " + miss_LV + ";" << endl;
     outFile << "        MissMass_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        MissMass2_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M2();" << endl;
+    outFile << "        inv_LV_" + var_name_vect.at(var_indx) + " = " + inv_LV.erase(inv_LV.length() - 3); + ";" << endl;
+    outFile << "        InvMass_" + var_name_vect.at(var_indx) + " = inv_LV_" + var_name_vect.at(var_indx) + ".M()" << endl;
     outFile << "        missE_" + var_name_vect.at(var_indx) + " = " + missE + ";" << endl;
     outFile << "        MissEnergy_" + var_name_vect.at(var_indx) + " = missE_" + var_name_vect.at(var_indx) + ";" << endl;
 }
@@ -355,6 +362,7 @@ outFile << "        TLorentzVector missAll_LV;" << endl;
 outFile << "        missAll_LV = " + missAll_LV + ";" << endl; 
 outFile << "        MissMass = missAll_LV.M();" << endl;
 outFile << "        MissMass2 = missAll_LV.M2();" << endl;
+outFile << "        InvMass = invAll_LV.M();" << endl;
 outFile << "        // (somewhat) miscellaneous" << endl;
 outFile << "        MissTh = missAll_LV.Theta();" << endl;
 outFile << "        MissE = " + missEAll + ";" << endl;
