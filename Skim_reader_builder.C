@@ -169,6 +169,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
 }
 outFile << "float MissMass;" << endl;
 outFile << "float MissMass2;" << endl;
+outFile << "float InvMass;" << endl;
 outFile << "float MissTh;" << endl;
 outFile << "float MissE;" << endl;
 outFile << "float Q2;" << endl;
@@ -356,7 +357,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "        MissMass_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        MissMass2_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M2();" << endl;
     outFile << "        inv_LV_" + var_name_vect.at(var_indx) + " = " + inv_LV.erase(inv_LV.length() - 3) + ";" << endl;
-    outFile << "        InvMass_" + var_name_vect.at(var_indx) + " = inv_LV_" + var_name_vect.at(var_indx) + ".M()" << endl;
+    outFile << "        InvMass_" + var_name_vect.at(var_indx) + " = inv_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        missE_" + var_name_vect.at(var_indx) + " = " + missE + ";" << endl;
     outFile << "        MissEnergy_" + var_name_vect.at(var_indx) + " = missE_" + var_name_vect.at(var_indx) + ";" << endl;
 }
