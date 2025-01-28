@@ -366,6 +366,8 @@ outFile << "        TLorentzVector missAll_LV;" << endl;
 outFile << "        missAll_LV = " + missAll_LV + ";" << endl; 
 outFile << "        MissMass = missAll_LV.M();" << endl;
 outFile << "        MissMass2 = missAll_LV.M2();" << endl;
+outFile << "        TLorentzVector invAll_LV;" << endl;
+outFile << "        invAll_LV = " + invAll_LV.erase(invAll_LV.length() - 3) + ";" << endl; 
 outFile << "        InvMass = invAll_LV.M();" << endl;
 outFile << "        // (somewhat) miscellaneous" << endl;
 outFile << "        MissTh = missAll_LV.Theta();" << endl;
