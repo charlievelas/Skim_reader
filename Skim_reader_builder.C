@@ -163,6 +163,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "float " + var_name_vect.at(var_indx) + "_Th;" << endl;
     outFile << "float MissMass_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "float MissMass2_" + var_name_vect.at(var_indx) + ";" << endl;
+    outFile << "float InvMass_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "float MissEnergy_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "TLorentzVector " + var_name_vect.at(var_indx) + "_LV; // No associated branch" << endl; // No associated branch
 }
@@ -185,11 +186,13 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_E\",&" + var_name_vect.at(var_indx) + "_E);" << endl;
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_Th\",&" + var_name_vect.at(var_indx) + "_Th);" << endl;        
     outFile << "tree->Branch(\"MissMass_" + var_name_vect.at(var_indx) + "\",&MissMass_" + var_name_vect.at(var_indx) + ");" << endl;        
-    outFile << "tree->Branch(\"MissMass2_" + var_name_vect.at(var_indx) + "\",&MissMass2_" + var_name_vect.at(var_indx) + ");" << endl;        
+    outFile << "tree->Branch(\"MissMass2_" + var_name_vect.at(var_indx) + "\",&MissMass2_" + var_name_vect.at(var_indx) + ");" << endl;  
+    outFile << "tree->Branch(\"InvMass_" + var_name_vect.at(var_indx) + "\",&InvMass_" + var_name_vect.at(var_indx) + ");" << endl;  
     outFile << "tree->Branch(\"MissEnergy_" + var_name_vect.at(var_indx) + "\",&MissEnergy_" + var_name_vect.at(var_indx) + ");" << endl;
 }
 outFile << "tree->Branch(\"MissMass\",&MissMass);" << endl;        
 outFile << "tree->Branch(\"MissMass2\",&MissMass2);" << endl;
+outFile << "tree->Branch(\"InvMass\",&InvMass);" << endl;
 outFile << "tree->Branch(\"MissTh\",&MissTh);" << endl;        
 outFile << "tree->Branch(\"MissE\",&MissE);" << endl;
 outFile << "tree->Branch(\"Q2\",&Q2);" << endl;
