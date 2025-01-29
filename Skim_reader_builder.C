@@ -165,7 +165,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "float MissMass_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "float MissMass2_" + var_name_vect.at(var_indx) + ";" << endl;
     // Inv mass loop
-    std::string inv_mass_parts;
+    std::string inv_mass_parts = "";
     for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
         if(var_indx_2!=var_indx){
             inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx2) + "_";
@@ -199,7 +199,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "tree->Branch(\"MissMass_" + var_name_vect.at(var_indx) + "\",&MissMass_" + var_name_vect.at(var_indx) + ");" << endl;        
     outFile << "tree->Branch(\"MissMass2_" + var_name_vect.at(var_indx) + "\",&MissMass2_" + var_name_vect.at(var_indx) + ");" << endl;
     // Inv mass loop
-    std::string inv_mass_parts;
+    std::string inv_mass_parts = "";
     for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
         if(var_indx_2!=var_indx){
             inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx2) + "_";
@@ -364,19 +364,22 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "        float missE_" + var_name_vect.at(var_indx) + ";" << endl;
     std::string miss_LV = "Beam_LV + Target_LV";
     std::string inv_LV = "";
+    std::string inv_mass_parts = "";
     std::string missE = "Beam_LV.E() + Target_LV.E()";
     for (int var_indx2=0; var_indx2<var_name_vect.size(); var_indx2++){
         if (var_indx!=var_indx2){
             miss_LV = miss_LV + " - " + var_name_vect.at(var_indx2) + "_LV"; 
             inv_LV = inv_LV + var_name_vect.at(var_indx2) + "_LV + ";
+            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx2) "_";
             missE = missE + " - " + var_name_vect.at(var_indx2) + "_LV.E()";
         }
-    }    PIDs_chosen.erase(PIDs_chosen.length() - 5);
+    }
+    inv_mass_parts.erase(inv_mass_parts.length() - 1);
     outFile << "        miss_LV_" + var_name_vect.at(var_indx) + " = " + miss_LV + ";" << endl;
     outFile << "        MissMass_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        MissMass2_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M2();" << endl;
     outFile << "        inv_LV_" + var_name_vect.at(var_indx) + " = " + inv_LV.erase(inv_LV.length() - 3) + ";" << endl;
-    outFile << "        InvMass_" + var_name_vect.at(var_indx) + " = inv_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
+    outFile << "        InvMass_" + inv_mass_parts + " = inv_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        missE_" + var_name_vect.at(var_indx) + " = " + missE + ";" << endl;
     outFile << "        MissEnergy_" + var_name_vect.at(var_indx) + " = missE_" + var_name_vect.at(var_indx) + ";" << endl;
 }
