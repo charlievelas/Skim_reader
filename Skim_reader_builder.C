@@ -168,7 +168,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     std::string inv_mass_parts = "";
     for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
         if(var_indx_2!=var_indx){
-            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx2) + "_";
+            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx_2) + "_";
         }
     }    
     inv_mass_parts.erase(inv_mass_parts.length() - 1);
@@ -202,7 +202,7 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     std::string inv_mass_parts = "";
     for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
         if(var_indx_2!=var_indx){
-            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx2) + "_";
+            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx_2) + "_";
         }
     }    
     inv_mass_parts.erase(inv_mass_parts.length() - 1);
@@ -366,12 +366,12 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     std::string inv_LV = "";
     std::string inv_mass_parts = "";
     std::string missE = "Beam_LV.E() + Target_LV.E()";
-    for (int var_indx2=0; var_indx2<var_name_vect.size(); var_indx2++){
-        if (var_indx!=var_indx2){
-            miss_LV = miss_LV + " - " + var_name_vect.at(var_indx2) + "_LV"; 
-            inv_LV = inv_LV + var_name_vect.at(var_indx2) + "_LV + ";
-            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx2) "_";
-            missE = missE + " - " + var_name_vect.at(var_indx2) + "_LV.E()";
+    for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
+        if (var_indx!=var_indx_2){
+            miss_LV = miss_LV + " - " + var_name_vect.at(var_indx_2) + "_LV"; 
+            inv_LV = inv_LV + var_name_vect.at(var_indx_2) + "_LV + ";
+            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx_2)  + "_";
+            missE = missE + " - " + var_name_vect.at(var_indx_2) + "_LV.E()";
         }
     }
     inv_mass_parts.erase(inv_mass_parts.length() - 1);
