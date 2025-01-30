@@ -381,7 +381,6 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "              " + var_name_vect.at(var_indx) + "_status=particle[k]->par()->getStatus();" << endl;
     // region calcualtion
     outFile << "              int region = abs(particle[k]->par()->getStatus()).replace(1, 3, 3, '0');;" << endl;
-    outFile << "              int region = particle[k]->par()->getStatus();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_region=region" << endl;
     outFile << "              float " + var_name_vect.at(var_indx) + "_M=" + "PDG_info->GetParticle(particle[k]->par()->getPid())->Mass();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_LV.SetXYZM(" + var_name_vect.at(var_indx) + "_Px," + var_name_vect.at(var_indx) + "_Py," + var_name_vect.at(var_indx) + "_Pz," + var_name_vect.at(var_indx) + "_M);" << endl;
