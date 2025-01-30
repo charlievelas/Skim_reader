@@ -222,7 +222,7 @@ std::vector<std::string> Inv_names;
 std::vector<std::string> Inv_formulae;
 generate_all_combinations(var_name_vect, Inv_names, Inv_formulae);
 for (size_t i = 0; i < Inv_names.size(); ++i) {
-    outFile << "float InvMass_" + Inv_names[i] << std::endl;
+    outFile << "float InvMass_" + Inv_names[i] + ";" << std::endl;
 }
 outFile << "float MissTh;" << endl;
 outFile << "float MissE;" << endl;
@@ -380,8 +380,10 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "              " + var_name_vect.at(var_indx) + "_chi2PID=particle[k]->par()->getChi2Pid();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_status=particle[k]->par()->getStatus();" << endl;
     // region calcualtion
-    outFile << "              int region = abs(particle[k]->par()->getStatus()).replace(1, 3, 3, '0');;" << endl;
-    outFile << "              " + var_name_vect.at(var_indx) + "_region=region" << endl;
+    outFile << "              int region_abs = abs(particle[k]->par()->getStatus());" << endl;
+    outFile << "	      string region_abs_str = std::to_string(region_abs);" << endl;
+    outFile << "	      region_abs_str.replace(1, 3, 3, '0');" << endl;
+    outFile << "              " + var_name_vect.at(var_indx) + "_region=std::stoi(region_abs_str);" << endl;
     outFile << "              float " + var_name_vect.at(var_indx) + "_M=" + "PDG_info->GetParticle(particle[k]->par()->getPid())->Mass();" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_LV.SetXYZM(" + var_name_vect.at(var_indx) + "_Px," + var_name_vect.at(var_indx) + "_Py," + var_name_vect.at(var_indx) + "_Pz," + var_name_vect.at(var_indx) + "_M);" << endl;
     outFile << "              " + var_name_vect.at(var_indx) + "_E=" + var_name_vect.at(var_indx) + "_LV.E();" << endl;
