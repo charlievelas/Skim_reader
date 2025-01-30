@@ -1,6 +1,54 @@
 #include <iostream>
 #include <fstream>
+#include <iostream>
+#include <vector>
+#include <string>
 #include <unordered_map>
+
+// Function to generate combinations of any size (from 2 to vec.size())
+void generate_combinations(const std::vector<std::string>& vec, int start, int k, std::vector<std::string>& current, std::vector<std::string>& Inv_names, std::vector<std::string>& Inv_formulae) {
+    // If the current combination size is equal to the desired size (k), convert to string and add to Inv_names and Inv_formulae
+    if (current.size() == k) {
+        std::string name_combination;
+        std::string formula_combination;
+
+        // Convert current combination to a string for Inv_names (with underscores)
+        for (size_t i = 0; i < current.size(); ++i) {
+            name_combination += current[i];
+            if (i != current.size() - 1) {
+                name_combination += "_";  // Separate values with an underscore
+            }
+        }
+        Inv_names.push_back(name_combination);  // Store the combination in Inv_names
+
+        // Convert current combination to a string for Inv_formulae (with plus signs)
+        for (size_t i = 0; i < current.size(); ++i) {
+            formula_combination += current[i] + "_LV";
+            if (i != current.size() - 1) {
+                formula_combination += "+";  // Separate values with a plus sign
+            }
+        }
+        Inv_formulae.push_back(formula_combination);  // Store the combination in Inv_formulae
+
+        return;
+    }
+
+    // Generate combinations starting from 'start'
+    for (size_t i = start; i < vec.size(); ++i) {
+        current.push_back(vec[i]);  // Add current element to the combination
+        generate_combinations(vec, i + 1, k, current, Inv_names, Inv_formulae);  // Recurse for the next element
+        current.pop_back();  // Backtrack
+    }
+}
+
+// Function to generate all combinations of sizes from 2 to vec.size() for both Inv_names and Inv_formulae
+void generate_all_combinations(const std::vector<std::string>& vec, std::vector<std::string>& Inv_names, std::vector<std::string>& Inv_formulae) {
+    std::vector<std::string> current;
+    // Generate combinations for each size from 2 to vec.size()
+    for (int k = 2; k <= vec.size(); ++k) {
+        generate_combinations(vec, 0, k, current, Inv_names, Inv_formulae);  // Generate combinations of size k
+    }
+}
 
 void Skim_reader_builder(){
 
@@ -164,21 +212,18 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "float " + var_name_vect.at(var_indx) + "_Th;" << endl;
     outFile << "float MissMass_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "float MissMass2_" + var_name_vect.at(var_indx) + ";" << endl;
-    // Inv mass loop
-    std::string inv_mass_parts = "";
-    for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
-        if(var_indx_2!=var_indx){
-            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx_2) + "_";
-        }
-    }    
-    inv_mass_parts.erase(inv_mass_parts.length() - 1);
-    outFile << "float InvMass_" + inv_mass_parts + ";" << endl;
     outFile << "float MissEnergy_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "TLorentzVector " + var_name_vect.at(var_indx) + "_LV; // No associated branch" << endl; // No associated branch
 }
 outFile << "float MissMass;" << endl;
 outFile << "float MissMass2;" << endl;
-outFile << "float InvMass;" << endl;
+// Inv mass loop
+std::vector<std::string> Inv_names;
+std::vector<std::string> Inv_formulae;
+generate_all_combinations(var_name_vect, Inv_names, Inv_formulae);
+for (size_t i = 0; i < Inv_names.size(); ++i) {
+    outFile << "float InvMass_" + Inv_names[i] << std::endl;
+}
 outFile << "float MissTh;" << endl;
 outFile << "float MissE;" << endl;
 outFile << "float Q2;" << endl;
@@ -198,20 +243,14 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     outFile << "tree->Branch(\"" + var_name_vect.at(var_indx) + "_Th\",&" + var_name_vect.at(var_indx) + "_Th);" << endl;        
     outFile << "tree->Branch(\"MissMass_" + var_name_vect.at(var_indx) + "\",&MissMass_" + var_name_vect.at(var_indx) + ");" << endl;        
     outFile << "tree->Branch(\"MissMass2_" + var_name_vect.at(var_indx) + "\",&MissMass2_" + var_name_vect.at(var_indx) + ");" << endl;
-    // Inv mass loop
-    std::string inv_mass_parts = "";
-    for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
-        if(var_indx_2!=var_indx){
-            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx_2) + "_";
-        }
-    }    
-    inv_mass_parts.erase(inv_mass_parts.length() - 1);
-    outFile << "tree->Branch(\"InvMass_" + inv_mass_parts + "\",&InvMass_" + inv_mass_parts + ");" << endl;  
     outFile << "tree->Branch(\"MissEnergy_" + var_name_vect.at(var_indx) + "\",&MissEnergy_" + var_name_vect.at(var_indx) + ");" << endl;
 }
 outFile << "tree->Branch(\"MissMass\",&MissMass);" << endl;        
 outFile << "tree->Branch(\"MissMass2\",&MissMass2);" << endl;
-outFile << "tree->Branch(\"InvMass\",&InvMass);" << endl;
+// Inv mass loop
+for (size_t i = 0; i < Inv_names.size(); ++i) {
+    outFile << "tree->Branch(\"InvMass_" + Inv_names[i] + "\",&InvMass_" + Inv_names[i] + ");" << endl;
+}
 outFile << "tree->Branch(\"MissTh\",&MissTh);" << endl;        
 outFile << "tree->Branch(\"MissE\",&MissE);" << endl;
 outFile << "tree->Branch(\"Q2\",&Q2);" << endl;
@@ -352,34 +391,24 @@ outFile << "        }" << endl;
 outFile << endl;
 
 std::string missAll_LV = "Beam_LV + Target_LV";
-std::string invAll_LV = "";
 std::string missEAll = "Beam_LV.E() + Target_LV.E()";
 for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
     missAll_LV = missAll_LV + " - " + var_name_vect.at(var_indx) + "_LV";
-    invAll_LV = invAll_LV + var_name_vect.at(var_indx) + "_LV + ";
     missEAll = missEAll + " - " + var_name_vect.at(var_indx) + "_LV.E()";
     // Confusion ahead: variables of the same name used here and also uploaded to outFile
     outFile << "        TLorentzVector miss_LV_" + var_name_vect.at(var_indx) + ";" << endl;
-    outFile << "        TLorentzVector inv_LV_" + var_name_vect.at(var_indx) + ";" << endl;
     outFile << "        float missE_" + var_name_vect.at(var_indx) + ";" << endl;
     std::string miss_LV = "Beam_LV + Target_LV";
-    std::string inv_LV = "";
-    std::string inv_mass_parts = "";
     std::string missE = "Beam_LV.E() + Target_LV.E()";
     for (int var_indx_2=0; var_indx_2<var_name_vect.size(); var_indx_2++){
         if (var_indx!=var_indx_2){
             miss_LV = miss_LV + " - " + var_name_vect.at(var_indx_2) + "_LV"; 
-            inv_LV = inv_LV + var_name_vect.at(var_indx_2) + "_LV + ";
-            inv_mass_parts = inv_mass_parts + var_name_vect.at(var_indx_2)  + "_";
             missE = missE + " - " + var_name_vect.at(var_indx_2) + "_LV.E()";
         }
     }
-    inv_mass_parts.erase(inv_mass_parts.length() - 1);
     outFile << "        miss_LV_" + var_name_vect.at(var_indx) + " = " + miss_LV + ";" << endl;
     outFile << "        MissMass_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        MissMass2_" + var_name_vect.at(var_indx) + " = miss_LV_" + var_name_vect.at(var_indx) + ".M2();" << endl;
-    outFile << "        inv_LV_" + var_name_vect.at(var_indx) + " = " + inv_LV.erase(inv_LV.length() - 3) + ";" << endl;
-    outFile << "        InvMass_" + inv_mass_parts + " = inv_LV_" + var_name_vect.at(var_indx) + ".M();" << endl;
     outFile << "        missE_" + var_name_vect.at(var_indx) + " = " + missE + ";" << endl;
     outFile << "        MissEnergy_" + var_name_vect.at(var_indx) + " = missE_" + var_name_vect.at(var_indx) + ";" << endl;
 }
@@ -388,9 +417,11 @@ outFile << "        TLorentzVector missAll_LV;" << endl;
 outFile << "        missAll_LV = " + missAll_LV + ";" << endl; 
 outFile << "        MissMass = missAll_LV.M();" << endl;
 outFile << "        MissMass2 = missAll_LV.M2();" << endl;
-outFile << "        TLorentzVector invAll_LV;" << endl;
-outFile << "        invAll_LV = " + invAll_LV.erase(invAll_LV.length() - 3) + ";" << endl; 
-outFile << "        InvMass = invAll_LV.M();" << endl;
+// Inv mass loop
+// Inv mass loop
+for (size_t i = 0; i < Inv_names.size(); ++i) {
+    outFile << "        InvMass_" + Inv_names[i]  + " = (" + Inv_formulae[i] + ").M();" << endl;
+}
 outFile << "        // (somewhat) miscellaneous" << endl;
 outFile << "        MissTh = missAll_LV.Theta();" << endl;
 outFile << "        MissE = " + missEAll + ";" << endl;
