@@ -354,7 +354,6 @@ outFile << endl;
 // Event loop
 outFile << "    Int_t eventnumber=0;" << endl;
 outFile << "    while(c12.next()==true){" << endl;
-outFile << "        eventnumber++;" << endl;
 outFile << "        int evn_el_count=0;" << endl;
 outFile << "        Int_t k = 0;" << endl;
 outFile << "        auto particle = c12.getDetParticles();" << endl;
@@ -471,7 +470,7 @@ while (true) {
                     std::cout << "Skimming with: " + input2 << endl;
                     outFile << "        if (" + input2 + "){" << endl;
                     outFile << "            tree->Fill();" << endl;
-                    outfile << "            eventnumber++;" << endl;
+                    outFile << "            eventnumber++;" << endl;
                     outFile << "        }" << endl;
                 }
             }
@@ -479,7 +478,7 @@ while (true) {
             if (input3=="no"){
                 cout << "No additional skimming conditions to be submitted" << endl;
                 outFile << "        tree->Fill();" << endl;
-                outfile << "        eventnumber++;" << endl;
+                outFile << "        eventnumber++;" << endl;
                 break;
             }
         break;
