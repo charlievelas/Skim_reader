@@ -229,9 +229,9 @@ for (int i = 0; i < LVCombos_names.size(); ++i) {
 }
 std::cout << std::endl;
 for (int i = 0; i < LVCombos_names.size(); ++i) {
-    //if (i>1*PID_vect.size()){
-    //    outFile << "float InvMass_" + LVCombos_names[i] + ";" << std::endl;
-    //}
+    if (i>1*PID_vect.size()){
+        outFile << "float InvMass_" + LVCombos_names[i] + ";" << std::endl;
+    }
     outFile << "float MissMass_" + LVCombos_names[i] + ";" << std::endl;
     outFile << "float MissMass2_" + LVCombos_names[i] + ";" << std::endl;
     outFile << "float MissEnergy_" + LVCombos_names[i] + ";" << std::endl;
@@ -252,9 +252,9 @@ for (int var_indx=0; var_indx<var_name_vect.size(); var_indx++){
 outFile << "tree->Branch(\"Q2\",&Q2);" << endl;
 outFile << "tree->Branch(\"Egamma\",&Egamma);" << endl;
 for (int i = 0; i < LVCombos_names.size(); ++i) {
-    //if (i>1*PID_vect.size()){
-    //    outFile << "tree->Branch(\"InvMass_" + LVCombos_names[i] + "\",&InvMass_" + LVCombos_names[i] + ");" << endl;
-    //}
+    if (i>1*PID_vect.size()){
+        outFile << "tree->Branch(\"InvMass_" + LVCombos_names[i] + "\",&InvMass_" + LVCombos_names[i] + ");" << endl;
+    }
     outFile << "tree->Branch(\"MissMass_" + LVCombos_names[i] + "\",&MissMass_" + LVCombos_names[i] + ");" << endl;
     outFile << "tree->Branch(\"MissMass2_" + LVCombos_names[i] + "\",&MissMass2_" + LVCombos_names[i] + ");" << endl;
     outFile << "tree->Branch(\"MissEnergy_" + LVCombos_names[i] + "\",&MissEnergy_" + LVCombos_names[i] + ");" << endl;
