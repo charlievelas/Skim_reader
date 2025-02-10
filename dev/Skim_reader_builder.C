@@ -471,6 +471,7 @@ while (true) {
                     std::cout << "Skimming with: " + input2 << endl;
                     outFile << "        if (" + input2 + "){" << endl;
                     outFile << "            tree->Fill();" << endl;
+                    outfile << "            eventnumber++;" << endl;
                     outFile << "        }" << endl;
                 }
             }
@@ -478,6 +479,7 @@ while (true) {
             if (input3=="no"){
                 cout << "No additional skimming conditions to be submitted" << endl;
                 outFile << "        tree->Fill();" << endl;
+                outfile << "        eventnumber++;" << endl;
                 break;
             }
         break;
@@ -494,6 +496,7 @@ break;
 
 outFile << endl;
 outFile << "    }" << endl;
+outFile << "   Number of saved events (additional conditions considered): " + eventnumber << endl;
 outFile << "}" << endl;
 outFile << "tree->Write();" << endl;
 outFile << endl;
