@@ -127,7 +127,11 @@ cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
 while (true) {
     // Ask the user for input
-    std::cout << "Enter particles (variable name 1,PID:variable name 2,PID ... etc): " << endl;
+    std::cout << "Allowed PIDs" << endl;
+    std::cout << "Leptons and bosons:   e+,-11  e-,11  g,22" << endl;
+    std::cout << "Hadrons:    d-,-45  d,45  pi-,-211  pi+,211  K-,-321  K+,321  n,2112  p-,2212  p,2212" << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl; 
+    std::cout << "Enter particles (variable name 1,PID:variable name 2,PID ... etc):" << endl;
     std::getline(std::cin, input);  // Get the user input
     int input_size=input.size();
 
@@ -219,14 +223,6 @@ outFile << "float Egamma;" << endl;
 std::vector<std::string> LVCombos_names;
 std::vector<std::string> LVCombos_formulae;
 generate_all_combinations(var_name_vect, LVCombos_names, LVCombos_formulae);
-for (int i = 0; i < LVCombos_formulae.size(); ++i) {
-    std::cout << LVCombos_formulae.at(i) << endl;
-
-}
-for (int i = 0; i < LVCombos_names.size(); ++i) {
-    std::cout << LVCombos_names.at(i) << endl;
-
-}
 std::cout << std::endl;
 for (int i = 0; i < LVCombos_names.size(); ++i) {
     if (i>1*PID_vect.size()){
