@@ -495,7 +495,7 @@ break;
 
 outFile << endl;
 outFile << "    }" << endl;
-outFile << "   Number of saved events (additional conditions considered): " + eventnumber << endl;
+outFile << "   cout << \"Number of saved events (additional conditions considered): \" + eventnumber << endl;" << endl;
 outFile << "}" << endl;
 outFile << "tree->Write();" << endl;
 outFile << endl;
