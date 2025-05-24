@@ -14,4 +14,5 @@ chmod u+x skim_reader_activator.sh
 
 ## How to run
 
- $SkimR/skim_reader_activator.sh
+    $SkimR/skim_reader_activator.sh
+    
