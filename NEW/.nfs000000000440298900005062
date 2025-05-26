@@ -4,7 +4,7 @@ echo "Welcome to Skim Reader"
 echo "This programme allows for easy HIPO skimming using clas12root"
 echo "A macro is built with user-specified particles and conditions"
 
-root -q -l $SkimR/Skim_reader_builder.C 2>&1 | grep -v '^Processing'
+root -q -l $SkimR/Skim_reader_builder.C > /dev/null 2>&1
 
 while true; do
     echo "Run 'Skim_reader.C'? (yes/no)"
