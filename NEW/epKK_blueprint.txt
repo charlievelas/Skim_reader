@@ -1,0 +1,157 @@
+Blueprint name:
+epKK_blueprint
+
+Particles:
+el,11 pro,2212 kp,321 km,-321
+
+Electron beam energy (GeV)?
+
+
+Target mass (Gev)?
+
+
+Allow events with more than 1 e+? (yes/no)
+
+
+Allow events with more than 1 p? (yes/no)
+
+
+Allow events with more than 1 K+? (yes/no)
+
+
+Allow events with more than 1 K-? (yes/no)
+
+
+Allow events with other particles? (yes/no)
+
+
+Use FT based time of event for FT electron? (yes/no)
+
+
+Calculate scattered electron kinematics? (empty=no)
+Scattered electron variable name:
+
+Calculate Gottfried-Jackson Variables? (empty=no)
+...
+
+Additional conditions (one condition per line, all branches below)? (empty=no)
+
+
+All branches:
+el_px
+el_py
+el_pz
+el_pMag
+el_vx
+el_vy
+el_vz
+el_vt
+el_E
+el_theta
+el_phi
+el_M
+el_beta
+el_PID
+el_chi2PID
+el_status
+el_region
+pro_px
+pro_py
+pro_pz
+pro_pMag
+pro_vx
+pro_vy
+pro_vz
+pro_vt
+pro_E
+pro_theta
+pro_phi
+pro_M
+pro_beta
+pro_PID
+pro_chi2PID
+pro_status
+pro_region
+kp_px
+kp_py
+kp_pz
+kp_pMag
+kp_vx
+kp_vy
+kp_vz
+kp_vt
+kp_E
+kp_theta
+kp_phi
+kp_M
+kp_beta
+kp_PID
+kp_chi2PID
+kp_status
+kp_region
+km_px
+km_py
+km_pz
+km_pMag
+km_vx
+km_vy
+km_vz
+km_vt
+km_E
+km_theta
+km_phi
+km_M
+km_beta
+km_PID
+km_chi2PID
+km_status
+km_region
+el_pro_ang
+el_pro_theta
+el_pro_phi
+el_kp_ang
+el_kp_theta
+el_kp_phi
+el_km_ang
+el_km_theta
+el_km_phi
+pro_kp_ang
+pro_kp_theta
+pro_kp_phi
+pro_km_ang
+pro_km_theta
+pro_km_phi
+kp_km_ang
+kp_km_theta
+kp_km_phi
+InvMass_el_pro
+InvMass_el_kp
+InvMass_el_km
+InvMass_pro_kp
+InvMass_pro_km
+InvMass_kp_km
+InvMass_el_pro_kp
+InvMass_el_pro_km
+InvMass_el_kp_km
+InvMass_pro_kp_km
+InvMass_el_pro_kp_km
+MissMass_el_pro
+MissMass_el_kp
+MissMass_el_km
+MissMass_pro_kp
+MissMass_pro_km
+MissMass_kp_km
+MissMass_el_pro_kp
+MissMass_el_pro_km
+MissMass_el_kp_km
+MissMass_pro_kp_km
+MissMass_el_pro_kp_km
+MissMass2_el_pro_kp_km
+TrigBits
+Egamma
+Pol
+t
+tPrime
+GJcosTheta
+GJphi
+GJpolPhi
