@@ -112,7 +112,7 @@ std::vector<std::string> particle_ang_branches(const std::string& input) {
     // Generate all unique, non-repeating combinations (size >= 2) in order of appearance
     std::vector<std::string> combos;
     int n = vars.size();
-    for (int k = 2; k <= n; ++k) {
+    for (int k = 1; k <= n; ++k) {
         std::vector<int> idx(k);
         for (int i = 0; i < k; ++i) idx[i] = i;
         while (true) {
@@ -130,8 +130,8 @@ std::vector<std::string> particle_ang_branches(const std::string& input) {
 
     // Add InvMass_ first, then MissMass_ in the same order
     std::vector<std::string> inv_miss_particle_strings;
-    for (const auto& combo : combos)
-        inv_miss_particle_strings.push_back("InvMass_" + combo);
+    for (int j = n; j < combos.size(); ++j)
+        inv_miss_particle_strings.push_back("InvMass_" + combos.at(j));
     for (const auto& combo : combos)
         inv_miss_particle_strings.push_back("MissMass_" + combo);
     // Add MissMass2_ for the last MissMass_ entry
