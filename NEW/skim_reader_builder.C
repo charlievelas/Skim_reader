@@ -79,16 +79,20 @@ for (const std::string& branch : all_branches) {
 }
 outFile << "" << endl;
 
-// Loretnz vectors
+// Save particle variable names and PIDs to vectors
 std::vector<std::string> var_names;
+std::vector<std::string> PIDs;
 std::istringstream particles_stream(particles);
 std::string token;
 while (std::getline(particles_stream, token, ':')) {
     size_t comma = token.find(',');
     if (comma != std::string::npos) {
         var_names.push_back(token.substr(0, comma));
+        PIDs.push_back(token.substr(comma + 1));
     }
 }
+
+// Create TLorentzVector
 for (const std::string& var_name : var_names) {
     outFile << "TLorentzVector " << var_name << "_LV;" << std::endl;
 }
@@ -120,6 +124,22 @@ while (std::getline(part2, line2)) {
 part2.close();
 
 // Calculate branches
-
+string part3_name = SkimR_location + "/skim_reader_part3.txt";
+for (int PID_indx=0; PID_indx<PIDs.size(); PID_indx++){
+    std::ifstream part3(part3_name);
+    std::string line3;
+    outFile << "            if (particle[k]->par()->getPid()==" + PIDs.at(PID_indx) + "){" << std::endl;
+    while (std::getline(part3, line3)) {
+        // Replace particle name in lines
+        size_t pos = 0;
+        while ((pos = line3.find("p4rtRepl4ce", pos)) != std::string::npos) {
+            line3.replace(pos, 11, var_names.at(PID_indx));
+            pos += var_names.at(PID_indx).length();
+        }
+        // Save line to outFile
+        outFile << line3 << std::endl;
+    }
+    outFile << "            }" << std::endl;
+}
 
 }
