@@ -14,9 +14,14 @@
 #include "clas12reader.h"
 using namespace clas12;
 
-void Skim_reader(){
+void skim_reader_slurm(TString infile, TString outfile){
 
-// HIPO or slum optimised
+TString in_file_name = infile;
+TChain chain("hipo");
+chain.Add(in_file_name.Data());
+auto files=chain.GetListOfFiles();
+TFile *tree_file = new TFile(outfile,"recreate");
+TTree *tree = new TTree("tree","tree");
 
 auto PDG_info=TDatabasePDG::Instance();
 TLorentzVector Beam_LV;
@@ -25,13 +30,15 @@ TLorentzVector Target_LV;
 Target_LV.SetXYZM(0,0,0,0.9999);
 TLorentzVector elScat_LV;
 
-float first;
-float second;
-float third;
+float InvMass_el_pro_kp;
+float MissMass_el_pro_kp;
+float MissMass2_el_pro_kp;
+float Egamma;
 
-tree->Branch("first",&first);
-tree->Branch("second",&second);
-tree->Branch("third",&third);
+tree->Branch("InvMass_el_pro_kp",&InvMass_el_pro_kp);
+tree->Branch("MissMass_el_pro_kp",&MissMass_el_pro_kp);
+tree->Branch("MissMass2_el_pro_kp",&MissMass2_el_pro_kp);
+tree->Branch("Egamma",&Egamma);
 
 TLorentzVector el_LV;
 TLorentzVector pro_LV;
@@ -44,6 +51,7 @@ for(Int_t i=0;i<files->GetEntries();i++){
     c12.addAtLeastPid(2212,1);
     c12.addAtLeastPid(321,1);
 
+    // Individual particle branches
     Int_t eventnumber=0;
     while(c12.next()==true){
         eventnumber++;
@@ -111,3 +119,18 @@ for(Int_t i=0;i<files->GetEntries();i++){
                 kp_status=particle[k]->par()->getStatus();
                 kp_region=kp_status.replace(1, 3, 3, '0');
             }
+
+        // Event branches
+        InvMass_el_pro_kp = (el_LV + pro_LV + kp_LV)).M();
+        MissMass_el_pro_kp = ((Beam_LV + Target_LV) - (el_LV + pro_LV + kp_LV)).M();
+        MissMass2_el_pro_kp = ((Beam_LV + Target_LV) - (el_LV + pro_LV + kp_LV)).M2();
+
+        tree->Fill();
+    }
+}
+
+tree->Write();
+
+cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+cout << "Skimmed tree saved to 'epK_skimmed_tree.root'" << endl;
+cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;

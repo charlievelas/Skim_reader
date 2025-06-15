@@ -4,6 +4,9 @@ epK_blueprint
 Particles:
 el,11 pro,2212 kp,321
 
+Enter run/HIPO file location or enter "slurm" to configure SkimReader for slurm:
+
+
 Electron beam energy (GeV)?
 
 
@@ -86,15 +89,6 @@ kp_PID
 kp_chi2PID
 kp_status
 kp_region
-el_pro_ang
-el_pro_theta
-el_pro_phi
-el_kp_ang
-el_kp_theta
-el_kp_phi
-pro_kp_ang
-pro_kp_theta
-pro_kp_phi
 InvMass_el_pro
 InvMass_el_kp
 InvMass_pro_kp

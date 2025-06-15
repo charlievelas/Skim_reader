@@ -62,41 +62,6 @@ std::vector<std::string> particle_branches(const std::string& input) {
     return particle_branches;
 }
 
-// Make all the particle angle branches
-std::vector<std::string> particle_ang_branches(const std::string& input) {
-    // Parse variable names
-    std::vector<std::string> vars;
-    std::istringstream ss(input);
-    std::string token;
-    while (std::getline(ss, token, ':')) {
-        size_t comma = token.find(',');
-        if (comma == std::string::npos) continue;
-        vars.push_back(token.substr(0, comma));
-    }
-
-    // Use a set to keep track of unique unordered pairs
-    std::set<std::pair<std::string, std::string>> seen_pairs;
-    std::vector<std::string> particle_ang_branches;
-
-    for (size_t i = 0; i < vars.size(); ++i) {
-        for (size_t j = i + 1; j < vars.size(); ++j) {
-            if (vars[i] != vars[j]) {
-                // Create an ordered pair (smallest first)
-                std::pair<std::string, std::string> p = 
-                    (vars[i] < vars[j]) ? std::make_pair(vars[i], vars[j]) : std::make_pair(vars[j], vars[i]);
-                // Only add if this unordered pair hasn't been seen
-                if (seen_pairs.insert(p).second) {
-                    // Use the order as they appear in the input (i, j)
-                    particle_ang_branches.push_back(vars[i] + "_" + vars[j] + "_ang");
-                    particle_ang_branches.push_back(vars[i] + "_" + vars[j] + "_theta");
-                    particle_ang_branches.push_back(vars[i] + "_" + vars[j] + "_phi");
-                }
-            }
-        }
-    }
-    return particle_ang_branches;
-}
-
 // Invariant and missing mass branches
     std::vector<std::string> inv_miss_mass_branches(const std::string& input) {
     // Parse variable names in order
@@ -162,13 +127,18 @@ std::replace(particles_str.begin(),particles_str.end(),':',' ');
 outFile << particles_str << endl;
 outFile << endl;
 
+// Slurm optimisation
+outFile << "Enter run/HIPO file location or enter \"slurm\" to configure SkimReader for slurm:" << endl;
+outFile << endl;
+outFile << endl;
+
 // Beam energy
 outFile << "Electron beam energy (GeV)?" << endl;
 outFile << endl;
 outFile << endl;
 
 // Target mass
-outFile << "Target mass (Gev)?" << endl;
+outFile << "Target mass (GeV)?" << endl;
 outFile << endl;
 outFile << endl;
 
@@ -194,6 +164,7 @@ outFile << endl;
 outFile << "Calculate scattered electron kinematics? (empty=no)" << endl;
 outFile << "Scattered electron variable name:" << endl;
 outFile << endl;
+outFile << endl;
 
 // Gottfried-Jackson frame
 outFile << "Calculate Gottfried-Jackson Variables? (empty=no)" << endl;
@@ -202,7 +173,7 @@ outFile << "..." << endl;
 outFile << endl;
 
 // Addtional conditions
-outFile << "Additional conditions (one condition per line, all branches below)? (empty=no)" << endl;
+outFile << "Additional conditions (all conditions on one line, all branches below)? (empty=no)" << endl;
 outFile << endl;
 outFile << endl;
 
@@ -212,11 +183,6 @@ outFile << "All branches:" << endl;
 std::vector<std::string> particle_branch_strings = particle_branches(particles);
 for (int i=0; i<particle_branch_strings.size();i++){
     outFile << particle_branch_strings.at(i) << endl;
-}
-// Particle angle branches
-std::vector<std::string> particle_ang_branch_strings = particle_ang_branches(particles);
-for (int i=0; i<particle_ang_branch_strings.size();i++){
-    outFile << particle_ang_branch_strings.at(i) << endl;
 }
 
 // Invariant and missing mass branches

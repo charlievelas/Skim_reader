@@ -1,3 +1,13 @@
 To run, enter
 
 ./creator.sh
+
+Fill blueprint file 
+
+./builder.sh [blueprint file]
+
+
+
+
+TEST:
+root 'skim_reader_builder.C("../", "epK", "el,11:pro,2212:kp,321", "slurm", "10", "0.9999", {"yes","yes","yes"}, "yes", "no", "no", {"InvMass_el_pro_kp","MissMass_el_pro_kp","MissMass2_el_pro_kp","Egamma"})'

@@ -34,7 +34,7 @@ std::vector<std::string> particle_option_strings(const std::string& particles, c
 
 //void skim_reader_builder(string SkimR_location, string blueprint_name, float particles, float beam_energy, float target_mass, const std::vector<std::string>& options_particles, string other_particles, string FT_based, string scat_el, string GJ, const std::vector<std::string>& all_branches){
 
-void skim_reader_builder(string SkimR_location, string blueprint_name, string particles, string beam_energy, string target_mass, const std::vector<std::string>& options_particles, string other_particles, const std::vector<std::string>& all_branches){
+void skim_reader_builder(string SkimR_location, string blueprint_name, string particles, string hipo_slurm, string beam_energy, string target_mass, const std::vector<std::string>& options_particles, string other_particles, string FT_based, string scat_el, const std::vector<std::string>& all_branches){
 // Create the file
 std::string file = std::string(blueprint_name) + "_SkimReader.C";
 std::ofstream outFile(file);
@@ -48,13 +48,30 @@ while (std::getline(part1, line1)) {
 }
 part1.close();
 
-// Save function name
-outFile << "void Skim_reader(){" << std::endl;
-outFile << "" << std::endl;
-
-// File input
-outFile << "// HIPO or slum optimised" << std::endl;
-outFile << "" << std::endl;
+// HIPO or slurm
+if (hipo_slurm=="slurm"){
+    outFile << "void skim_reader_slurm(TString infile, TString outfile){" << endl;
+    outFile << endl;
+    outFile << "TString in_file_name = infile;" << endl;
+    outFile << "TChain chain(\"hipo\");" << endl;
+    outFile << "chain.Add(in_file_name.Data());" << endl;
+    outFile << "auto files=chain.GetListOfFiles();" << endl;
+    outFile << "TFile *tree_file = new TFile(outfile,\"recreate\");" << endl;
+    outFile << "TTree *tree = new TTree(\"tree\",\"tree\");" << endl;
+    outFile << endl;   
+    
+} else {
+    outFile << "void Skim_reader(){" << endl;
+    outFile << endl;
+    outFile << "TString in_file_name = " << hipo_slurm << ";" << endl;
+    outFile << "TChain chain(\"hipo\");" << endl;
+    outFile << "chain.Add(in_file_name.Data());" << endl;
+    outFile << "auto files=chain.GetListOfFiles();" << endl;
+    outFile << "string outFile_name = \"" + blueprint_name + "_skimmed_tree.root\";" << endl;
+    outFile << "TFile *tree_file = new TFile(outFile_name,\"recreate\");" << endl;
+    outFile << "TTree *tree = new TTree(\"tree\",\"tree\");" << endl;
+    outFile << endl;
+}
 
 // Beam and target setup
 outFile << "auto PDG_info=TDatabasePDG::Instance();" << std::endl;
@@ -109,12 +126,18 @@ for (const std::string& option : particle_options) {
     outFile << "    " << option << endl;
 }
 
-
 // Other particle conditions
-if (other_particles=="no") outFile << "    c12.addZeroOfRestPid();" << endl;
-outFile << "" << endl;
+if (other_particles=="no"){
+    outFile << "    c12.addZeroOfRestPid();" << endl;
+    outFile << endl;
+}
+
+// FT based events
+if (FT_based=="yes") outFile << "    c12.useFTBased();" << endl;
+outFile << endl;
 
 // Start of event loop
+outFile << "    // Individual particle branches" << endl;
 string part2_name = SkimR_location + "/skim_reader_part2.txt";
 std::ifstream part2(part2_name);
 std::string line2;
@@ -123,7 +146,7 @@ while (std::getline(part2, line2)) {
 }
 part2.close();
 
-// Calculate branches
+// Calculate individual particle branches
 string part3_name = SkimR_location + "/skim_reader_part3.txt";
 for (int PID_indx=0; PID_indx<PIDs.size(); PID_indx++){
     std::ifstream part3(part3_name);
@@ -141,5 +164,74 @@ for (int PID_indx=0; PID_indx<PIDs.size(); PID_indx++){
     }
     outFile << "            }" << std::endl;
 }
+outFile << std::endl;
+
+// Calculate event branches
+outFile << "        // Event branches" << endl;
+int start_indx = var_names.size()*17;
+for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
+    // Check if string starts with "InvMass", "MissMass" or "MissMass2"
+    string branch_repl = all_branches.at(br_indx);
+    if (branch_repl.rfind("InvMass_", 0) == 0) {
+        outFile << "        " << branch_repl;
+        string branch_repl_new = branch_repl.substr(8);
+        size_t pos = 0;
+        while ((pos = branch_repl_new.find("_", pos)) != std::string::npos) {
+            branch_repl_new.replace(pos, 1, "_LV + ");
+            pos += 3;
+        }
+        outFile << " = (" << branch_repl_new << "_LV)).M();" << endl;
+    } 
+    // 
+    else if (branch_repl.rfind("MissMass_", 0) == 0) {
+        outFile << "        " << branch_repl;
+        string branch_repl_new = branch_repl.substr(9);
+        size_t pos = 0;
+        while ((pos = branch_repl_new.find("_", pos)) != std::string::npos) {
+            branch_repl_new.replace(pos, 1, "_LV + ");
+            pos += 3;
+        }
+        outFile << " = ((Beam_LV + Target_LV) - (" << branch_repl_new << "_LV)).M();" << endl;
+    } else if (branch_repl.rfind("MissMass2_", 0) == 0) {
+        outFile << "        " << branch_repl;
+        string branch_repl_new = branch_repl.substr(10);
+        size_t pos = 0;
+        while ((pos = branch_repl_new.find("_", pos)) != std::string::npos) {
+            branch_repl_new.replace(pos, 1, "_LV + ");
+            pos += 3;
+        }
+        outFile << " = ((Beam_LV + Target_LV) - (" << branch_repl_new << "_LV)).M2();" << endl;
+    } else if (branch_repl.rfind("TrigBits", 0) == 0) {
+        outFile << "        " << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("Egamma", 0) == 0 && scat_el!="no") {
+        outFile << "        " << branch_repl << " = (Beam_LV - " << scat_el + "_LV).E();" << endl; 
+    } else if (branch_repl.rfind("t", 0) == 0) {
+        outFile << "        " << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("tPrime", 0) == 0) {
+        outFile << "        " << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("GJcosTheta", 0) == 0) {
+        outFile << "        " << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("GJphi", 0) == 0) {
+        outFile << "        " << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("GJpolPhi", 0) == 0) {
+        outFile << "        " << branch_repl << "..." << endl;
+    }
 
 }
+
+    // Fill tree
+    outFile << endl;
+    outFile << "        tree->Fill();" << endl;
+    outFile << "    }" << endl;
+    outFile << "}" << endl;
+    outFile << endl;
+    outFile << "tree->Write();" << endl;
+    outFile << endl;
+
+    // Saved tree statement
+    outFile << "cout << \"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\" << endl;" << endl;
+    outFile << "cout << \"Skimmed tree saved to '" + blueprint_name + "_skimmed_tree.root'\" << endl;" << endl;
+    outFile << "cout << \"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\" << endl;" << endl;
+}
+
+
