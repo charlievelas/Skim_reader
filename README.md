@@ -21,7 +21,7 @@ First, run blueprint creator,
 ```
 Next, edit the blueprint file.
 
-Next, builder SkimReader,
+Next, build SkimReader,
 
 ```
 ./builder.sh [blueprint file name] 
