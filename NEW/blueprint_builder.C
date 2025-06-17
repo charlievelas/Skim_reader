@@ -117,14 +117,14 @@ std::ofstream outFile(file);
 
 // Save blueprint name
 outFile << "Blueprint name:" << endl;
-outFile << filename << endl;
-outFile << ""<< endl;
+string filename_str = filename;
+filename_str.erase(filename_str.length()-10);
+outFile << filename_str << endl;
+outFile << endl;
 
 // Save particles
 outFile << "Particles:" << endl;
-std::string particles_str = std::string(particles);
-std::replace(particles_str.begin(),particles_str.end(),':',' ');
-outFile << particles_str << endl;
+outFile << particles << endl;
 outFile << endl;
 
 // Slurm optimisation
@@ -156,7 +156,7 @@ outFile << endl;
 outFile << endl;
 
 // FT based
-outFile << "Use FT based time of event for FT electron? (yes/no)" << endl;
+outFile << "Use FT based time for event? (yes/no)" << endl;
 outFile << endl;
 outFile << endl;
 
@@ -167,13 +167,13 @@ outFile << endl;
 outFile << endl;
 
 // Gottfried-Jackson frame
-outFile << "Calculate Gottfried-Jackson Variables? (empty=no)" << endl;
+outFile << "Calculate Gottfried-Jackson frame variables? (empty=no)" << endl;
 //UNDER CONSTRUCTION ...
-outFile << "..." << endl;
+outFile << endl;
 outFile << endl;
 
 // Addtional conditions
-outFile << "Additional conditions (all conditions on one line, all branches below)? (empty=no)" << endl;
+outFile << "Additional conditions (all conditions on one line)? (empty=no)" << endl;
 outFile << endl;
 outFile << endl;
 
@@ -196,9 +196,8 @@ outFile << "TrigBits" << endl;
 
 // Scattered electron kinematics
 outFile << "Egamma" << endl;
+outFile << "Q2" << endl;
 outFile << "Pol" << endl;
-outFile << "t" << endl;
-outFile << "tPrime" << endl;
 
 // Gottfried-Jackson variabels
 outFile << "GJcosTheta" << endl;

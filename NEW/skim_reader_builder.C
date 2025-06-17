@@ -32,9 +32,7 @@ std::vector<std::string> particle_option_strings(const std::string& particles, c
     return result;
 }
 
-//void skim_reader_builder(string SkimR_location, string blueprint_name, float particles, float beam_energy, float target_mass, const std::vector<std::string>& options_particles, string other_particles, string FT_based, string scat_el, string GJ, const std::vector<std::string>& all_branches){
-
-void skim_reader_builder(string SkimR_location, string blueprint_name, string particles, string hipo_slurm, string beam_energy, string target_mass, const std::vector<std::string>& options_particles, string other_particles, string FT_based, string scat_el, const std::vector<std::string>& all_branches){
+void skim_reader_builder(string SkimR_location, string blueprint_name, string particles, string hipo_slurm, string beam_energy, string target_mass, const std::vector<std::string>& options_particles, string other_particles, string FT_based, string scat_el, string GJ_variables, std::string add_conditions, const std::vector<std::string>& all_branches){
 // Create the file
 std::string file = std::string(blueprint_name) + "_SkimReader.C";
 std::ofstream outFile(file);
@@ -81,17 +79,20 @@ outFile << beam_string << std::endl;
 outFile << "TLorentzVector Target_LV;" << std::endl;
 string target_string = "Target_LV.SetXYZM(0,0,0," + target_mass + ");";
 outFile << target_string << std::endl;
-outFile << "TLorentzVector elScat_LV;" << std::endl;
-outFile << "" << endl;
+outFile << std::endl;
 
 // Initialisations
 for (const std::string& branch : all_branches) {
+    if (branch=="Egamma" && scat_el=="no"|| branch=="Q2" && scat_el=="no"|| branch=="Pol" && scat_el=="no") continue;
+    if (branch=="GJcosTheta" && GJ_variables=="no"|| branch=="GJphi" && GJ_variables=="no"|| branch=="GJpolPhi" && GJ_variables=="no") continue;
     outFile << "float " << branch << ";" << std::endl;
 }
 outFile << "" << endl;
 
 // All branches
 for (const std::string& branch : all_branches) {
+    if (branch=="Egamma" && scat_el=="no"|| branch=="Q2" && scat_el=="no"|| branch=="Pol" && scat_el=="no") continue;
+    if (branch=="GJcosTheta" && GJ_variables=="no"|| branch=="GJphi" && GJ_variables=="no"|| branch=="GJpolPhi" && GJ_variables=="no") continue;
     outFile << "tree->Branch(\"" << branch << "\",&" << branch << ");" << std::endl;
 }
 outFile << "" << endl;
@@ -202,26 +203,30 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
         }
         outFile << " = ((Beam_LV + Target_LV) - (" << branch_repl_new << "_LV)).M2();" << endl;
     } else if (branch_repl.rfind("TrigBits", 0) == 0) {
-        outFile << "        " << branch_repl << "..." << endl; 
+        outFile << "        //" << branch_repl << "..." << endl; 
     } else if (branch_repl.rfind("Egamma", 0) == 0 && scat_el!="no") {
         outFile << "        " << branch_repl << " = (Beam_LV - " << scat_el + "_LV).E();" << endl; 
-    } else if (branch_repl.rfind("t", 0) == 0) {
-        outFile << "        " << branch_repl << "..." << endl; 
-    } else if (branch_repl.rfind("tPrime", 0) == 0) {
-        outFile << "        " << branch_repl << "..." << endl; 
-    } else if (branch_repl.rfind("GJcosTheta", 0) == 0) {
-        outFile << "        " << branch_repl << "..." << endl; 
-    } else if (branch_repl.rfind("GJphi", 0) == 0) {
-        outFile << "        " << branch_repl << "..." << endl; 
-    } else if (branch_repl.rfind("GJpolPhi", 0) == 0) {
-        outFile << "        " << branch_repl << "..." << endl;
+    } else if (branch_repl.rfind("Q2", 0) == 0 && scat_el!="no") {
+        outFile << "        " << branch_repl << " = -(Beam_LV - " << scat_el + "_LV).M2();" << endl; 
+    } else if (branch_repl.rfind("GJcosTheta", 0) == 0 && GJ_variables!="no") {
+        outFile << "        //" << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("GJphi", 0) == 0 && GJ_variables!="no") {
+        outFile << "        //" << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("GJpolPhi", 0) == 0 && GJ_variables!="no") {
+        outFile << "        //" << branch_repl << "..." << endl;
     }
 
 }
 
     // Fill tree
     outFile << endl;
-    outFile << "        tree->Fill();" << endl;
+    if (add_conditions!="no"){
+        outFile << "        if (" << add_conditions << "){" << endl;
+        outFile << "            tree->Fill();" << endl;
+        outFile << "        }" << endl;
+    } else{
+        outFile << "        tree->Fill();" << endl;
+    }
     outFile << "    }" << endl;
     outFile << "}" << endl;
     outFile << endl;
@@ -232,6 +237,9 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
     outFile << "cout << \"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\" << endl;" << endl;
     outFile << "cout << \"Skimmed tree saved to '" + blueprint_name + "_skimmed_tree.root'\" << endl;" << endl;
     outFile << "cout << \"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\" << endl;" << endl;
+
+    // Skim reader print statement
+    cout << file << " has been created." << endl;
 }
 
 

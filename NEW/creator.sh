@@ -36,4 +36,4 @@ root -q -l 'blueprint_builder.C("'$FILE_NAME'_blueprint","'$PARTICLES'")' 2>&1 |
 
 echo "~ FILE ~"
 echo "'${FILE_NAME}_blueprint.txt' has been created,"
-echo "please OPEN this file and enter information."
+echo "please open this file and enter information."
