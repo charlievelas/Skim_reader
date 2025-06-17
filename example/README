@@ -1,5 +1,6 @@
 The blueprint file and SkimReader were produced using the following steps:
 
+```
 ./creator.sh 
 
 epKK
@@ -8,4 +9,4 @@ el,11:pro,2212:kp1,321:kp2,321
 vim epKK_blueprint.txt
 
 ./builder.sh epKK_blueprint.txt
-
+```
