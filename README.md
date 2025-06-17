@@ -9,10 +9,13 @@ On cshrc
 git clone https://github.com/charlievelas/Skim_reader.git
 cd Skim_reader
 setenv SkimR $PWD
-chmod u+x skim_reader_activator.sh
+chmod u+x creator.sh
+chmod u+x builder.sh
 ```
 
 ## How to run
-
-    $SkimR/skim_reader_activator.sh
-    
+First, run blueprint creator,
+./creator.sh
+Next, edit the blueprint file.
+Next, builder SkimReader,
+./builder.sh [blueprint file name] 
