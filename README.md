@@ -15,9 +15,14 @@ chmod u+x builder.sh
 
 ## How to run
 First, run blueprint creator,
-```./creator.sh
+
+```
+./creator.sh
 ```
 Next, edit the blueprint file.
+
 Next, builder SkimReader,
-```./builder.sh [blueprint file name] 
+
+```
+./builder.sh [blueprint file name] 
 ```
