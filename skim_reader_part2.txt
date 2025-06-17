@@ -1,0 +1,7 @@
+    Int_t eventnumber=0;
+    while(c12.next()==true){
+        eventnumber++;
+        Int_t k = 0;
+        auto particle = c12.getDetParticles();
+        Int_t numofpart = particle.size();
+        for(Int_t k=0;k<numofpart;k++){

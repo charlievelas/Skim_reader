@@ -1,0 +1,18 @@
+                p4rtRepl4ce_px=particle[k]->par()->getPx();
+                p4rtRepl4ce_py=particle[k]->par()->getPx();
+                p4rtRepl4ce_pz=particle[k]->par()->getPx();
+                p4rtRepl4ce_LV.SetXYZM(p4rtRepl4ce_px,p4rtRepl4ce_py,p4rtRepl4ce_pz,PDG_info->GetParticle(particle[k]->par()->getPid())->Mass());
+                p4rtRepl4ce_pMag=p4rtRepl4ce_LV.Rho();
+                p4rtRepl4ce_vx=particle[k]->par()->getVx();
+                p4rtRepl4ce_vy=particle[k]->par()->getVy();
+                p4rtRepl4ce_vz=particle[k]->par()->getVz();
+                p4rtRepl4ce_vt=particle[k]->par()->getVt();
+                p4rtRepl4ce_E=p4rtRepl4ce_LV.E()
+                p4rtRepl4ce_theta=p4rtRepl4ce_LV.Theta();
+                p4rtRepl4ce_phi=p4rtRepl4ce_LV.Phi();
+                p4rtRepl4ce_M=p4rtRepl4ce_LV.M();
+                p4rtRepl4ce_beta=particle[k]->par()->getBeta();
+                p4rtRepl4ce_PID=particle[k]->par()->getPid();
+                p4rtRepl4ce_chi2PID=particle[k]->par()->getChi2Pid();
+                p4rtRepl4ce_status=particle[k]->par()->getStatus();
+                p4rtRepl4ce_region=p4rtRepl4ce_status.replace(1, 3, 3, '0');
