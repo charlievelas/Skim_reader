@@ -17,12 +17,12 @@ chmod u+x builder.sh
 First, run blueprint creator,
 
 ```
-./creator.sh
+$SkimR/creator.sh
 ```
 Next, edit the blueprint file.
 
 Next, build SkimReader,
 
 ```
-./builder.sh [blueprint file name] 
+$SkimR/builder.sh [blueprint file name] 
 ```
