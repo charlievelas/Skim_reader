@@ -32,7 +32,7 @@ while true; do
 done
 
 # Send particles to blueprint_builder.C to build blueprint
-root -q -l 'blueprint_builder.C("'$FILE_NAME'_blueprint","'$PARTICLES'")' 2>&1 | grep -v '^Processing'
+root -q -l '$SkimR/blueprint_builder.C("'$FILE_NAME'_blueprint","'$PARTICLES'")' 2>&1 | grep -v '^Processing'
 
 echo "~ FILE ~"
 echo "'${FILE_NAME}_blueprint.txt' has been created,"
