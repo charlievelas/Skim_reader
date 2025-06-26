@@ -155,4 +155,4 @@ sleep 0.5
 echo ""
 echo "Building SkimReader"
 
-root -q -l 'skim_reader_builder.C("'$var1'","'$var2'","'$var3'","'$var4'","'$var5'","'$var6'",'$var7',"'$var8'","'$var9'","'$var10'","'$var11'","'"$var12"'",'$var13')' 2>&1 | grep -v '^Processing'
+root -q -l '$SkimR/skim_reader_builder.C("'$var1'","'$var2'","'$var3'","'$var4'","'$var5'","'$var6'",'$var7',"'$var8'","'$var9'","'$var10'","'$var11'","'"$var12"'",'$var13')' 2>&1 | grep -v '^Processing'
