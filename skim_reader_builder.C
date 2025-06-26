@@ -181,7 +181,7 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
             branch_repl_new.replace(pos, 1, "_LV + ");
             pos += 3;
         }
-        outFile << " = (" << branch_repl_new << "_LV)).M();" << endl;
+        outFile << " = (" << branch_repl_new << "_LV).M();" << endl;
     } 
     // 
     else if (branch_repl.rfind("MissMass_", 0) == 0) {
