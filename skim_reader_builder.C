@@ -61,7 +61,7 @@ if (hipo_slurm=="slurm"){
 } else {
     outFile << "void Skim_reader(){" << endl;
     outFile << endl;
-    outFile << "TString in_file_name = " << hipo_slurm << ";" << endl;
+    outFile << "TString in_file_name = \"" << hipo_slurm << "\";" << endl;
     outFile << "TChain chain(\"hipo\");" << endl;
     outFile << "chain.Add(in_file_name.Data());" << endl;
     outFile << "auto files=chain.GetListOfFiles();" << endl;
