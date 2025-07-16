@@ -19,9 +19,9 @@ var7_list=()    # More than each particle (array)
 var8=""         # Other particles
 var9=""         # Use FT based time of event for FT electron? (yes/no)
 var10=""        # Scattered electron name
-var11=""        # Gottfried-Jackson frame
-var12=""        # Additional conditions
-var13=""        # All branches
+
+var11=""        # Additional conditions
+var12=""        # All branches
 branches=()
 
 while IFS= read -r line; do
@@ -56,7 +56,7 @@ while IFS= read -r line; do
     elif [[ "$line" == "Target mass (GeV)?"* ]]; then
         read -r next_line
         if [[ -z "$next_line" ]]; then
-            var6="0.943"
+            var6="0.938272"
         else
             var6="$next_line"
         fi
@@ -88,19 +88,13 @@ while IFS= read -r line; do
         else
             var10="$next_line"
         fi
-    elif [[ "$line" == "Calculate Gottfried-Jackson frame variables? (empty=no)"* ]]; then
+    
+    elif [[ "$line" == "Additional conditions (all conditions on one line)? (empty=no)"* ]]; then
         read -r next_line
         if [[ -z "$next_line" ]]; then
             var11="no"
         else
             var11="$next_line"
-        fi
-    elif [[ "$line" == "Additional conditions (all conditions on one line)? (empty=no)"* ]]; then
-        read -r next_line
-        if [[ -z "$next_line" ]]; then
-            var12="no"
-        else
-            var12="$next_line"
         fi
     elif [[ "$line" == "All branches:"* ]]; then
         branches=()
@@ -111,7 +105,7 @@ while IFS= read -r line; do
             fi
             branches+=("\"$next_line\"")
         done
-        # var13 will be set after the loop
+        # var12 will be set after the loop
     fi
 done < "$input_file"
 
@@ -123,9 +117,9 @@ else
 fi
 
 if [[ -n "${branches[*]}" ]]; then
-    IFS=,; var13="{${branches[*]}}"; IFS=$' \t\n'
+    IFS=,; var12="{${branches[*]}}"; IFS=$' \t\n'
 else
-    var13="{}"
+    var12="{}"
 fi
 
 echo "Configuration"
@@ -148,11 +142,9 @@ echo "Use FT based time:             $var9"
 sleep 0.5
 echo "Scattered electron name:       $var10"
 sleep 0.5
-echo "Gottfried-Jackson frame:       $var11"
-sleep 0.5
-echo "Additional conditions:         $var12"
+echo "Additional conditions:         $var11"
 sleep 0.5
 echo ""
 echo "Building SkimReader"
 
-root -q -l '$SkimR/skim_reader_builder.C("'$var1'","'$var2'","'$var3'","'$var4'","'$var5'","'$var6'",'$var7',"'$var8'","'$var9'","'$var10'","'$var11'","'"$var12"'",'$var13')' 2>&1 | grep -v '^Processing'
+root -q -l '$SkimR/skim_reader_builder.C("'$var1'","'$var2'","'$var3'","'$var4'","'$var5'","'$var6'",'$var7',"'$var8'","'$var9'","'$var10'","'"$var11"'",'$var12')' 2>&1 | grep -v '^Processing'

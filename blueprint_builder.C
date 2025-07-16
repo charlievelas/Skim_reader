@@ -166,12 +166,6 @@ outFile << "Scattered electron variable name:" << endl;
 outFile << endl;
 outFile << endl;
 
-// Gottfried-Jackson frame
-outFile << "Calculate Gottfried-Jackson frame variables? (empty=no)" << endl;
-//UNDER CONSTRUCTION ...
-outFile << endl;
-outFile << endl;
-
 // Addtional conditions
 outFile << "Additional conditions (all conditions on one line)? (empty=no)" << endl;
 outFile << endl;
@@ -199,9 +193,5 @@ outFile << "Egamma" << endl;
 outFile << "Q2" << endl;
 outFile << "Pol" << endl;
 
-// Gottfried-Jackson variabels
-outFile << "GJcosTheta" << endl;
-outFile << "GJphi" << endl;
-outFile << "GJpolPhi" << endl;
-
 }
+
