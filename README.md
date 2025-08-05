@@ -28,3 +28,23 @@ Next, build SkimReader,
 ```
 $SkimR/builder.sh [blueprint file name] 
 ```
+
+## Calculating variables
+Once the hipo files have been skimmed and a TTree is obtained, other variables can be calculated easily for all the events on the TTree.
+The Gottfried-Jackson angles for each event can be calcualted using the following command,
+
+```
+$SkimR/GJ/GJ.sh [file name]
+```
+and then providing the scattered electron, proton, particle 1 and particle 2 variables names. A new root file called 'GJ_[original file name]' is produced. This script uses beam energy of 10.2 GeV (energy will be a user input in the future).
+
+Similarly, the degree of linear polarisation and phi angle between the electron and hadron planes can be calculated using the following command,
+```
+$SkimR/polarisation/pol.sh [file name]
+```
+
+and the helicity frame angles by
+
+```
+$SkimR/helicity/hel.sh [file name]
+```
