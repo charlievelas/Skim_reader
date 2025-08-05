@@ -13,6 +13,9 @@ cd Skim_reader
 setenv SkimR $PWD
 chmod u+x creator.sh
 chmod u+x builder.sh
+chmod u+x GJ/GJ.sh
+chmod u+x polarisation/pol.sh
+chmod u+x helicity/hel.sh
 ```
 
 ## How to run
