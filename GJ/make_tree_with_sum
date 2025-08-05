@@ -1,0 +1,23 @@
+// make_tree_with_sum.C
+void make_tree_with_sum(const char* outfile = "example.root") {
+    TFile* f = new TFile(outfile, "RECREATE");
+    TTree* tree = new TTree("tree", "Electron momentum tree");
+
+    float el_px, el_py, el_pz, sum;
+    tree->Branch("el_px", &el_px, "el_px/F");
+    tree->Branch("el_py", &el_py, "el_py/F");
+    tree->Branch("el_pz", &el_pz, "el_pz/F");
+    tree->Branch("sum",   &sum,   "sum/F");
+
+    TRandom3 rnd(0);
+    for (int i = 0; i < 10000; ++i) {
+        el_px = rnd.Uniform(-0.1, 0.1);
+        el_py = rnd.Uniform(-0.1, 0.1);
+        el_pz = rnd.Uniform(0, 9);
+        sum = el_px + el_py + el_pz;
+        tree->Fill();
+    }
+
+    tree->Write();
+    f->Close();
+}

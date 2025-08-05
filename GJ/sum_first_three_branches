@@ -1,0 +1,45 @@
+// sum_first_three_branches.C
+// Usage: root -l -b -q 'sum_first_three_branches.C("input.root", "output.root")'
+
+void sum_first_three_branches(const char* infile, const char* outfile) {
+    // Open input file and get first TTree
+    TFile* fin = TFile::Open(infile, "READ");
+    if (!fin || fin->IsZombie()) { printf("Cannot open input file\n"); return; }
+    TTree* t = (TTree*)fin->Get(fin->GetListOfKeys()->At(0)->GetName());
+    if (!t) { printf("No TTree found\n"); return; }
+
+    // Get first three branch names
+    TObjArray* branches = t->GetListOfBranches();
+    if (branches->GetEntries() < 3) { printf("Tree has fewer than 3 branches\n"); return; }
+    TString b1 = branches->At(0)->GetName();
+    TString b2 = branches->At(1)->GetName();
+    TString b3 = branches->At(2)->GetName();
+
+    // Set up variables for the first three branches (assume float)
+    float v1, v2, v3, sumNew;
+    t->SetBranchAddress(b1, &v1);
+    t->SetBranchAddress(b2, &v2);
+    t->SetBranchAddress(b3, &v3);
+
+    // Create output file and clone tree structure (no entries yet)
+    TFile* fout = TFile::Open(outfile, "RECREATE");
+    TTree* t_new = t->CloneTree(0);
+
+    // Add new branch for the sum
+    TBranch* b_sum = t_new->Branch("sumNew", &sumNew, "sumNew/F");
+
+    // Loop over events, fill new tree
+    Long64_t nentries = t->GetEntries();
+    for (Long64_t i = 0; i < nentries; ++i) {
+        t->GetEntry(i);
+        sumNew = v1 + v2;
+        t_new->Fill();
+    }
+
+    t_new->Write();
+    fout->Close();
+    fin->Close();
+}
+
+
+
