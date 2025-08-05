@@ -29,7 +29,7 @@ Next, build SkimReader,
 $SkimR/builder.sh [blueprint file name] 
 ```
 
-## Calculating variables
+## Calculating other variables
 Once the hipo files have been skimmed and a TTree is obtained, other variables can be calculated easily for all the events on the TTree.
 The Gottfried-Jackson angles for each event can be calcualted using the following command,
 
