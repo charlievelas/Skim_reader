@@ -220,7 +220,7 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
     } else{
         outFile << "        tree->Fill();" << endl;
     }
-    outFile << "    }" << endl;
+
     outFile << "}" << endl;
     outFile << endl;
     outFile << "tree->Write();" << endl;
