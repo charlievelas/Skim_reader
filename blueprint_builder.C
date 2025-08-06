@@ -186,7 +186,7 @@ for (int i=0; i<inv_miss_mass_branch_strings.size();i++){
 }
 
 // Trigger bits
-outFile << "TrigBits" << endl;
+outFile << "Triggers" << endl;
 
 // Scattered electron kinematics
 outFile << "Egamma" << endl;

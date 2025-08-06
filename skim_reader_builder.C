@@ -200,8 +200,8 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
             pos += 3;
         }
         outFile << " = ((Beam_LV + Target_LV) - (" << branch_repl_new << "_LV)).M2();" << endl;
-    } else if (branch_repl.rfind("TrigBits", 0) == 0) {
-        outFile << "        //" << branch_repl << "..." << endl; 
+    } else if (branch_repl.rfind("Triggers", 0) == 0) {
+        outFile << "        " << branch_repl << " = c12.runconfig()->getTrigger();" << endl; 
     } else if (branch_repl.rfind("Egamma", 0) == 0 && scat_el!="no") {
         outFile << "        " << branch_repl << " = (Beam_LV - " << scat_el + "_LV).E();" << endl; 
     } else if (branch_repl.rfind("Q2", 0) == 0 && scat_el!="no") {
