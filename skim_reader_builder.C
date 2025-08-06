@@ -164,6 +164,7 @@ for (int PID_indx=0; PID_indx<PIDs.size(); PID_indx++){
     outFile << "            }" << std::endl;
 }
 outFile << std::endl;
+outFile << "        }" << endl;
 
 // Calculate event branches
 outFile << "        // Event branches" << endl;
