@@ -96,7 +96,7 @@ while IFS= read -r line; do
         else
             var11="$next_line"
         fi
-    elif [[ "$line" == "All branches:"* ]]; then
+    elif [[ "$line" == "All branches (DO NOT CHANGE):"* ]]; then
         branches=()
         while IFS= read -r next_line; do
             # Stop if end of file (loop will exit naturally)
