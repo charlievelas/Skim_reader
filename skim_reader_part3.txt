@@ -7,7 +7,7 @@
                 p4rtRepl4ce_vy=particle[k]->par()->getVy();
                 p4rtRepl4ce_vz=particle[k]->par()->getVz();
                 p4rtRepl4ce_vt=particle[k]->par()->getVt();
-                p4rtRepl4ce_E=p4rtRepl4ce_LV.E();
+                p4rtRepl4ce_E=p4rtRepl4ce_LV.E()
                 p4rtRepl4ce_theta=p4rtRepl4ce_LV.Theta();
                 p4rtRepl4ce_phi=p4rtRepl4ce_LV.Phi();
                 p4rtRepl4ce_M=p4rtRepl4ce_LV.M();
@@ -15,4 +15,6 @@
                 p4rtRepl4ce_PID=particle[k]->par()->getPid();
                 p4rtRepl4ce_chi2PID=particle[k]->par()->getChi2Pid();
                 p4rtRepl4ce_status=particle[k]->par()->getStatus();
-                p4rtRepl4ce_region=p4rtRepl4ce_status.replace(1, 3, 3, '0');
+		p4rtRepl4ce_status_str=std::to_string(abs(p4rtRepl4ce_status));
+		p4rtRepl4ce_region_str=p4rtRepl4ce_status_str.replace(1, 3, 3, '0');
+                p4rtRepl4ce_region=std::stoi(p4rtRepl4ce_region_str);

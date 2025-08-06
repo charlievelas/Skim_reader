@@ -66,7 +66,7 @@ if (hipo_slurm=="slurm"){
     outFile << "chain.Add(in_file_name.Data());" << endl;
     outFile << "auto files=chain.GetListOfFiles();" << endl;
     outFile << "string outFile_name = \"" + blueprint_name + "_skimmed_tree.root\";" << endl;
-    outFile << "TFile *tree_file = new TFile(outFile_name,\"recreate\");" << endl;
+    outFile << "TFile *tree_file = new TFile(outFile_name.c_str(),\"recreate\");" << endl;
     outFile << "TTree *tree = new TTree(\"tree\",\"tree\");" << endl;
     outFile << endl;
 }
