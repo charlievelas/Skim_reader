@@ -172,7 +172,7 @@ outFile << endl;
 outFile << endl;
 
 // All branches
-outFile << "All branches:" << endl;
+outFile << "All branches (DO NOT CHANGE):" << endl;
 // Particle branches
 std::vector<std::string> particle_branch_strings = particle_branches(particles);
 for (int i=0; i<particle_branch_strings.size();i++){

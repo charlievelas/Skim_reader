@@ -48,7 +48,7 @@ part1.close();
 
 // HIPO or slurm
 if (hipo_slurm=="slurm"){
-    outFile << "void skim_reader_slurm(TString infile, TString outfile){" << endl;
+    outFile << "void " << std::string(blueprint_name) << "_SkimReader(TString infile, TString outfile){" << endl;
     outFile << endl;
     outFile << "TString in_file_name = infile;" << endl;
     outFile << "TChain chain(\"hipo\");" << endl;
@@ -59,7 +59,7 @@ if (hipo_slurm=="slurm"){
     outFile << endl;   
     
 } else {
-    outFile << "void Skim_reader(){" << endl;
+    outFile << "void "<< std::string(blueprint_name) << "_SkimReader(){" << endl;
     outFile << endl;
     outFile << "TString in_file_name = \"" << hipo_slurm << "\";" << endl;
     outFile << "TChain chain(\"hipo\");" << endl;
@@ -233,6 +233,7 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
     // Skim reader print statement
     cout << file << " has been created." << endl;
 
+    outFile << "}" << endl;
     outFile << "}" << endl;
 }
 
