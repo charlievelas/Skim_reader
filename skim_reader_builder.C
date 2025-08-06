@@ -83,14 +83,14 @@ outFile << std::endl;
 
 // Initialisations
 for (const std::string& branch : all_branches) {
-    if (branch=="Egamma" && scat_el=="no"|| branch=="Q2" && scat_el=="no"|| branch=="Pol" && scat_el=="no") continue;
+    if (branch=="Egamma" && scat_el=="no"|| branch=="Q2" && scat_el=="no") continue;
     outFile << "float " << branch << ";" << std::endl;
 }
 outFile << "" << endl;
 
 // All branches
 for (const std::string& branch : all_branches) {
-    if (branch=="Egamma" && scat_el=="no"|| branch=="Q2" && scat_el=="no"|| branch=="Pol" && scat_el=="no") continue;
+    if (branch=="Egamma" && scat_el=="no"|| branch=="Q2" && scat_el=="no") continue;
     outFile << "tree->Branch(\"" << branch << "\",&" << branch << ");" << std::endl;
 }
 outFile << "" << endl;

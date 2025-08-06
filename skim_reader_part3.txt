@@ -1,6 +1,6 @@
                 p4rtRepl4ce_px=particle[k]->par()->getPx();
-                p4rtRepl4ce_py=particle[k]->par()->getPx();
-                p4rtRepl4ce_pz=particle[k]->par()->getPx();
+                p4rtRepl4ce_py=particle[k]->par()->getPy();
+                p4rtRepl4ce_pz=particle[k]->par()->getPz();
                 p4rtRepl4ce_LV.SetXYZM(p4rtRepl4ce_px,p4rtRepl4ce_py,p4rtRepl4ce_pz,PDG_info->GetParticle(particle[k]->par()->getPid())->Mass());
                 p4rtRepl4ce_pMag=p4rtRepl4ce_LV.Rho();
                 p4rtRepl4ce_vx=particle[k]->par()->getVx();

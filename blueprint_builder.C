@@ -191,7 +191,6 @@ outFile << "Triggers" << endl;
 // Scattered electron kinematics
 outFile << "Egamma" << endl;
 outFile << "Q2" << endl;
-outFile << "Pol" << endl;
 
 }
 
