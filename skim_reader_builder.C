@@ -221,6 +221,7 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
         outFile << "        tree->Fill();" << endl;
     }
 
+    outFile << "    }" << endl;
     outFile << "}" << endl;
     outFile << endl;
     outFile << "tree->Write(\"k\", TObject::kOverwrite);" << endl;
@@ -234,7 +235,6 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
     // Skim reader print statement
     cout << file << " has been created." << endl;
 
-    outFile << "}" << endl;
     outFile << "}" << endl;
 }
 
