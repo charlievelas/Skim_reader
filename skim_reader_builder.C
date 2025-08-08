@@ -224,7 +224,7 @@ for (int br_indx = 0; br_indx<all_branches.size(); br_indx++){
     outFile << "    }" << endl;
     outFile << "}" << endl;
     outFile << endl;
-    outFile << "tree->Write(\"k\", TObject::kOverwrite);" << endl;
+    outFile << "tree->Write(\"\", TObject::kOverwrite);" << endl;
     outFile << endl;
 
     // Saved tree statement
